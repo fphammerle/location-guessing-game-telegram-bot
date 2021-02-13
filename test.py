@@ -49,14 +49,15 @@ def _photo_command(
     if "last_photo_message_id" in context.chat_data:
         update.effective_chat.send_message(
             text="Lösung: {}".format(context.chat_data["last_photo"].description_url),
-            disable_notification=True,
+            disable_web_page_preview=True,
+            reply_to_message_id=context.chat_data["last_photo_message_id"],
         )
         # https://github.com/python-telegram-bot/python-telegram-bot/pull/2043
         context.bot.send_location(
             chat_id=update.effective_chat.id,
             latitude=context.chat_data["last_photo"].latitude,
             longitude=context.chat_data["last_photo"].longitude,
-            reply_to_message_id=context.chat_data["last_photo_message_id"],
+            disable_notification=True,
         )
         context.chat_data["last_photo_message_id"] = None
     update.effective_chat.send_message(
