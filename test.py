@@ -16,19 +16,22 @@ def _start_command(
     update: telegram.update.Update,
     context: telegram.ext.callbackcontext.CallbackContext,
 ):
-    update.effective_chat.send_message(text=f"chat_data={context.chat_data}",)
+    if "last_photo_message_id" in context.chat_data:
+        # https://github.com/python-telegram-bot/python-telegram-bot/pull/2043
+        context.bot.send_location(
+            chat_id=update.effective_chat.id,
+            latitude=48,
+            longitude=16,
+            reply_to_message_id=context.chat_data["last_photo_message_id"],
+        )
+    update.effective_chat.send_message(text=f"chat_data={context.chat_data}")
     photo_request = requests.get(
         "https://upload.wikimedia.org/wikipedia/commons/c/cf/Clematis_alpina_02.jpg"
     )
-    update.effective_chat.send_photo(photo=io.BytesIO(photo_request.content))
-    # https://github.com/python-telegram-bot/python-telegram-bot/pull/2043
-    context.bot.send_location(
-        chat_id=update.effective_chat.id,
-        latitude=48,
-        longitude=16,
-        # reply_to_message_id TODO
+    photo_message = update.effective_chat.send_photo(
+        photo=io.BytesIO(photo_request.content)
     )
-    context.chat_data["last_update"] = update.message.date
+    context.chat_data["last_photo_message_id"] = photo_message.message_id
 
 
 def _main():
