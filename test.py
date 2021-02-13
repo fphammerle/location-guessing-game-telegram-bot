@@ -21,6 +21,13 @@ def _start_command(
         "https://upload.wikimedia.org/wikipedia/commons/c/cf/Clematis_alpina_02.jpg"
     )
     update.effective_chat.send_photo(photo=io.BytesIO(photo_request.content))
+    # https://github.com/python-telegram-bot/python-telegram-bot/pull/2043
+    context.bot.send_location(
+        chat_id=update.effective_chat.id,
+        latitude=48,
+        longitude=16,
+        # reply_to_message_id TODO
+    )
     context.chat_data["last_update"] = update.message.date
 
 
