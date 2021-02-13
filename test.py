@@ -17,6 +17,7 @@ def _start_command(
     context: telegram.ext.callbackcontext.CallbackContext,
 ):
     if "last_photo_message_id" in context.chat_data:
+        update.effective_chat.send_message(text="Lösung:", disable_notification=True)
         # https://github.com/python-telegram-bot/python-telegram-bot/pull/2043
         context.bot.send_location(
             chat_id=update.effective_chat.id,
@@ -24,12 +25,15 @@ def _start_command(
             longitude=16,
             reply_to_message_id=context.chat_data["last_photo_message_id"],
         )
-    update.effective_chat.send_message(text=f"chat_data={context.chat_data}")
+    update.effective_chat.send_message(
+        text="Neues Photo wird ausgewählt und gesendet.", disable_notification=True
+    )
     photo_request = requests.get(
         "https://upload.wikimedia.org/wikipedia/commons/c/cf/Clematis_alpina_02.jpg"
     )
     photo_message = update.effective_chat.send_photo(
-        photo=io.BytesIO(photo_request.content)
+        photo=io.BytesIO(photo_request.content),
+        caption="Wo wurde dieses Photo aufgenommen?",
     )
     context.chat_data["last_photo_message_id"] = photo_message.message_id
 
