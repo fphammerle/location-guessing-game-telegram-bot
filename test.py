@@ -7,8 +7,8 @@ import logging
 import pathlib
 import random
 import typing
+import urllib.request
 
-import requests
 import telegram.ext
 import telegram.update
 
@@ -63,13 +63,18 @@ def _photo_command(
         text="Neues Photo wird ausgewählt und gesendet.", disable_notification=True
     )
     while True:
-        # TODO handle exception
         photo = random.choice(context.bot_data["photos"])
-        photo_message = update.effective_chat.send_photo(
-            photo=io.BytesIO(requests.get(photo.photo_url).content),
-            caption="Wo wurde dieses Photo aufgenommen?",
-        )
-        break
+        try:
+            with urllib.request.urlopen(photo.photo_url) as photo_response:
+                photo_message = update.effective_chat.send_photo(
+                    photo=photo_response, caption="Wo wurde dieses Photo aufgenommen?",
+                )
+        except telegram.error.BadRequest:
+            _LOGGER.warning("file size limit exceeded?", exc_info=True)
+        except telegram.error.TimedOut:
+            _LOGGER.warning("timeout", exc_info=True)
+        else:
+            break
     context.chat_data["last_photo"] = photo
     context.chat_data["last_photo_message_id"] = photo_message.message_id
 
