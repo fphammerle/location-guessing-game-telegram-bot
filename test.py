@@ -12,7 +12,7 @@ import telegram.update
 _LOGGER = logging.getLogger(__name__)
 
 
-def _start_command(
+def _photo_command(
     update: telegram.update.Update,
     context: telegram.ext.callbackcontext.CallbackContext,
 ):
@@ -51,7 +51,7 @@ def _main():
     updater = telegram.ext.Updater(
         token=args.token_path.read_text().rstrip(), use_context=True
     )
-    updater.dispatcher.add_handler(telegram.ext.CommandHandler("start", _start_command))
+    updater.dispatcher.add_handler(telegram.ext.CommandHandler("photo", _photo_command))
     updater.start_polling()
 
 
