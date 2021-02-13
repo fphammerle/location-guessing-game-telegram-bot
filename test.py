@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
 import argparse
+import io
 import logging
 import pathlib
 
+import requests
 import telegram.ext
 import telegram.update
 
@@ -14,10 +16,12 @@ def _start_command(
     update: telegram.update.Update,
     context: telegram.ext.callbackcontext.CallbackContext,
 ):
-    context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text=f"context={vars(context)}\nupdate={vars(update)}",
+    update.effective_chat.send_message(text=f"chat_data={context.chat_data}",)
+    photo_request = requests.get(
+        "https://upload.wikimedia.org/wikipedia/commons/c/cf/Clematis_alpina_02.jpg"
     )
+    update.effective_chat.send_photo(photo=io.BytesIO(photo_request.content))
+    context.chat_data["last_update"] = update.message.date
 
 
 def _main():
