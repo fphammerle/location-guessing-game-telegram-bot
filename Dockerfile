@@ -5,6 +5,7 @@ ARG SOURCE_DIR_PATH=/location-guessing-game-telegram-bot
 # hadolint ignore=DL3006
 FROM $BASE_IMAGE as build
 
+# hadolint ignore=DL3008
 RUN apt-get update \
     && apt-get install --no-install-recommends --yes \
         ca-certificates \
@@ -45,6 +46,7 @@ USER build
 # hadolint ignore=DL3006
 FROM $BASE_IMAGE
 
+# hadolint ignore=DL3008
 RUN apt-get update \
     && apt-get install --no-install-recommends --yes ca-certificates \
     && rm -rf /var/lib/apt/lists/* \
