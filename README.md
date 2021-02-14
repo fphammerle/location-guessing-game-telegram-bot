@@ -8,6 +8,8 @@
 
 Basic [Telegram Bot](https://telegram.org/) Sending Random [Wikimedia Commons](https://commons.wikimedia.org) Photos
 
+<img src="https://media.githubusercontent.com/media/fphammerle/location-guessing-game-telegram-bot/master/docs/screenshots/20210214T152031.jpg" width="40%" />&nbsp;<img src="https://media.githubusercontent.com/media/fphammerle/location-guessing-game-telegram-bot/master/docs/screenshots/20210214T152218.jpg" width="40%" />
+
 ## Setup
 
 1. Download a dataset of photos via the [WikiMap API](https://de.wikipedia.org/wiki/Benutzer:DB111/Tools#WikiMap), for instance:
