@@ -61,6 +61,8 @@ def _photo_command(
     update: telegram.update.Update,
     context: telegram.ext.callbackcontext.CallbackContext,
 ):
+    assert isinstance(context.chat_data, dict)  # mypy
+    assert update.effective_chat is not None  # mypy
     if "last_photo_message_id" in context.chat_data:
         update.effective_chat.send_message(
             text="Lösung: {}".format(context.chat_data["last_photo"].description_url),
@@ -109,11 +111,11 @@ class _Persistence(telegram.ext.BasePersistence):
             store_bot_data=True, store_chat_data=False, store_user_data=False
         )
 
-    def get_user_data(self) -> dict:
-        return {}  # pragma: no cover
+    def get_user_data(self) -> typing.DefaultDict[int, dict]:
+        raise NotImplementedError()  # pragma: no cover
 
-    def get_chat_data(self) -> dict:
-        return {}  # pragma: no cover
+    def get_chat_data(self) -> typing.DefaultDict[int, dict]:
+        raise NotImplementedError()  # pragma: no cover
 
     def get_bot_data(self) -> dict:
         return self._bot_data
