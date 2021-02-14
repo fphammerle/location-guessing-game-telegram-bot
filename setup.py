@@ -33,7 +33,14 @@ setuptools.setup(
     url=_REPO_URL,
     project_urls={"Changelog": _REPO_URL + "/blob/master/CHANGELOG.md"},
     license="GPLv3+",
-    keywords=["bot", "game", "guessing", "location", "photos", "telegram",],
+    keywords=[
+        "bot",
+        "game",
+        "guessing",
+        "location",
+        "photos",
+        "telegram",
+    ],
     classifiers=[
         # https://pypi.org/classifiers/
         "Development Status :: 3 - Alpha",

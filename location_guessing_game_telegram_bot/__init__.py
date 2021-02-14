@@ -83,7 +83,8 @@ def _photo_command(
         try:
             with urllib.request.urlopen(photo.photo_url) as photo_response:
                 photo_message = update.effective_chat.send_photo(
-                    photo=photo_response, caption="Wo wurde dieses Photo aufgenommen?",
+                    photo=photo_response,
+                    caption="Wo wurde dieses Photo aufgenommen?",
                 )
         except telegram.error.BadRequest:
             _LOGGER.warning("file size limit exceeded?", exc_info=True)
