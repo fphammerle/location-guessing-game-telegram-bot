@@ -45,6 +45,18 @@ from location_guessing_game_telegram_bot import _Photo
                 "/Gro%C3%9Fvenediger3.JPG",
             },
         ),
+        # coordinates["1"]
+        (
+            8,
+            {
+                "description_url": "https://commons.wikimedia.org/wiki"
+                "/File:Kasern_-_hinteres_Ahrntal.JPG",
+                "latitude": 47.06111,
+                "longitude": 12.15333,
+                "photo_url": "https://upload.wikimedia.org/wikipedia/commons/c/ce"
+                "/Kasern_-_hinteres_Ahrntal.JPG",
+            },
+        ),
     ),
 )
 def test_from_wikimap_export(wikimap_export, index, expected_vars):

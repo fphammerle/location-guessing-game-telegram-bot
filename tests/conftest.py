@@ -17,8 +17,11 @@
 
 import json
 import pathlib
+import typing
 
 import pytest
+
+from location_guessing_game_telegram_bot import _Photo
 
 
 @pytest.fixture(scope="session")
@@ -36,3 +39,8 @@ def wikimap_export_path() -> pathlib.Path:
 @pytest.fixture(scope="session")
 def wikimap_export(wikimap_export_path) -> pathlib.Path:
     return json.loads(wikimap_export_path.read_text())
+
+
+@pytest.fixture(scope="session")
+def wikimap_photos(wikimap_export) -> typing.List[_Photo]:
+    return [_Photo.from_wikimap_export(attrs) for attrs in wikimap_export]
