@@ -1,5 +1,11 @@
 # Location Guessing Game Telegram Bot 🏞️ 🌍 📌
 
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![CI Pipeline Status](https://github.com/fphammerle/location-guessing-game-telegram-bot/workflows/tests/badge.svg)](https://github.com/fphammerle/location-guessing-game-telegram-bot/actions)
+[![Coverage Status](https://coveralls.io/repos/github/fphammerle/location-guessing-game-telegram-bot/badge.svg?branch=master)](https://coveralls.io/github/fphammerle/location-guessing-game-telegram-bot?branch=master)
+[![Last Release](https://img.shields.io/pypi/v/location-guessing-game-telegram-bot.svg)](https://pypi.org/project/location-guessing-game-telegram-bot/#history)
+[![Compatible Python Versions](https://img.shields.io/pypi/pyversions/location-guessing-game-telegram-bot.svg)](https://pypi.org/project/location-guessing-game-telegram-bot/)
+
 Basic [Telegram Bot](https://telegram.org/) Sending Random [Wikimedia Commons](https://commons.wikimedia.org) Photos
 
 ## Setup
