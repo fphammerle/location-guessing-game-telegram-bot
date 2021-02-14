@@ -52,6 +52,10 @@ Detached signatures of images are available at https://github.com/fphammerle/con
 2. Edit paths in `docker-compose.yml`.
 3. `sudo docker-compose up --build`
 
+### Ansible
+
+See [ansible-playbook-example.yml](https://github.com/fphammerle/location-guessing-game-telegram-bot/blob/master/ansible-playbook-example.yml).
+
 ## Trivia
 
 Why create a Telegram bot instead of a web app?

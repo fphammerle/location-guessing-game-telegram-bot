@@ -1,0 +1,47 @@
+- hosts: some-host
+  gather_facts: no
+  become: yes
+  tasks:
+  - name: create volume for telegram token & wikimap export
+    docker_volume:
+      name: location_guessing_game_telegram_bot_data
+    register: data_volume
+  - name: store telegram token
+    copy:
+      dest: '{{ data_volume.volume.Mountpoint }}/telegram-token'
+      # https://telegram.me/botfather
+      content: !vault |
+        # ...
+      mode: a=r
+    no_log: true
+    register: telegram_token
+  - name: download wikimap dataset
+    get_url:
+      url: https://wikimap.toolforge.org/api.php?cat=Vienna&lang=de
+      # filename "wget --restrict-file-names=windows" encoded
+      dest: '{{ data_volume.volume.Mountpoint }}/api.php@cat=Vienna&lang=de'
+      mode: a=r
+    register: wikimap_dataset
+  - name: bot container
+    docker_container:
+      name: location_guessing_game_telegram_bot
+      # object e24e72aea596e9cfc69bd531d690d11389eb9e2d
+      # tag docker/0.1.1-amd64
+      image: docker.io/fphammerle/location-guessing-game-telegram-bot@sha256:0ee33594a044f844b8942a6b01e2df29a29ccd093917534bf5e760cf0bed2708
+      env:
+        TELEGRAM_TOKEN_PATH: '/data/{{ telegram_token.dest | relpath(data_volume.volume.Mountpoint) }}'
+        WIKIMAP_EXPORT_PATH: '/data/{{ wikimap_dataset.dest | relpath(data_volume.volume.Mountpoint) }}'
+      read_only: yes
+      mounts:
+      - type: volume
+        source: '{{ data_volume.volume.Name }}'
+        target: /data
+        read_only: yes
+      cap_drop: [ALL]
+      security_opts: [no-new-privileges]
+      cpu_quota: 4000
+      cpu_period: 10000
+      memory: 128M
+      restart_policy: unless-stopped
+      state: started
+      restart: '{{ telegram_token.changed or wikimap_dataset.changed }}'
