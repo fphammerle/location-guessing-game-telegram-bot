@@ -6,6 +6,10 @@ name = "pypi"
 [packages]
 location-guessing-game-telegram-bot = {path = ".", editable = true}
 
+# python3.5 compatibility
+# https://github.com/python-telegram-bot/python-telegram-bot/commit/19a4f9e53a1798b886fd4ce3e5a9a48db9ae5152#diff-60f61ab7a8d1910d86d9fda2261620314edcae5894d5aaa236b821c7256badd7L64
+python-telegram-bot = "<13"
+
 [dev-packages]
 # black requires python>=3.6
 # https://github.com/psf/black/commit/e74117f172e29e8a980e2c9de929ad50d3769150#diff-2eeaed663bd0d25b7e608891384b7298R51

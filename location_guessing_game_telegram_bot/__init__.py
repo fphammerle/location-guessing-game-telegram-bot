@@ -69,8 +69,10 @@ def _photo_command(
             disable_web_page_preview=True,
             reply_to_message_id=context.chat_data["last_photo_message_id"],
         )
-        # https://github.com/python-telegram-bot/python-telegram-bot/pull/2043
-        update.effective_chat.send_location(
+        # telegram.chat.Chat.send_location shortcut added in v13.0
+        # https://github.com/python-telegram-bot/python-telegram-bot/commit/fc5844c13da3b3fb20bb2d0bfcdf1efb1a826ba6#diff-2590f2bde47ea3730442f14a3a029ef77d8f2c8f3186cf5edd7e18bcc7243c39R381
+        context.bot.send_location(
+            chat_id=update.effective_chat.id,
             latitude=context.chat_data["last_photo"].latitude,
             longitude=context.chat_data["last_photo"].longitude,
             disable_notification=True,
