@@ -4,7 +4,7 @@ Basic [Telegram Bot](https://telegram.org/) Sending Random [Wikimedia Commons](h
 
 ## Setup
 
-1. Download a dataset of photos via the [WikiMap API](https://de.wikipedia.org/wiki/Benutzer:DB111/Tools#WikiMap), e.g. via:
+1. Download a dataset of photos via the [WikiMap API](https://de.wikipedia.org/wiki/Benutzer:DB111/Tools#WikiMap), for instance:
    ```sh
    wget --restrict-file-names=windows 'https://wikimap.toolforge.org/api.php?cat=Images_with_annotations&lang=de&year=2010-2015&region=49|9|46|18'
    ```
@@ -15,9 +15,9 @@ Basic [Telegram Bot](https://telegram.org/) Sending Random [Wikimedia Commons](h
 ## Usage
 
 1. Launch bot: `location-guessing-game-telegram-bot --telegram-token-path file-containing-api-token --wikimap-export-path wikimap-export.json`
-2. Open a chat with the bot in Telegram by searching for the bot name
+2. Open a chat with the bot in Telegram by searching for the bot's name
    previously sent to [BotFather](https://telegram.me/botfather)
-3. Send `/photo`, wait, and repeat
+3. Send message `/photo`, wait, and repeat
 4. Optionally add the bot to a group chat.
 
 ## Docker / Podman 🐳
@@ -35,7 +35,7 @@ $ sudo docker run --name location_guessing_game_telegram_bot \
 
 Optionally, replace `sudo docker` with `podman`.
 
-Annotation of signed tags `docker/*` contains docker image digests: https://github.com/fphammerle/location-guessing-game-telegram-bot/tags
+Annotation of signed git tags `docker/*` contains docker image digests: https://github.com/fphammerle/location-guessing-game-telegram-bot/tags
 
 ### Docker Compose 🐙
 
@@ -45,6 +45,6 @@ Annotation of signed tags `docker/*` contains docker image digests: https://gith
 
 ## Trivia
 
-Why create a Telegram bot instead of web app?
+Why create a Telegram bot instead of a web app?
 
-I created this mini game for my family including my grandparents who are comfortable using Telegram.
+I created this mini game for my family including my grandparents, who are comfortable using Telegram.
