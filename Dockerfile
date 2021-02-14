@@ -60,3 +60,7 @@ COPY --from=build $SOURCE_DIR_PATH $SOURCE_DIR_PATH
 ENV PATH=$SOURCE_DIR_PATH/.venv/bin:$PATH
 WORKDIR $SOURCE_DIR_PATH
 CMD ["location-guessing-game-telegram-bot"]
+
+# https://github.com/opencontainers/image-spec/blob/v1.0.1/annotations.md
+LABEL org.opencontainers.image.title="location guessing game telegram bot" \
+    org.opencontainers.image.source="https://github.com/fphammerle/location-guessing-game-telegram-bot"
