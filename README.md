@@ -29,6 +29,7 @@ $ sudo docker run --name location_guessing_game_telegram_bot \
     -v /file/containing/api-token:/telegram-token:ro -e TELEGRAM_TOKEN_PATH=/telegram-token \
     -v /wikimap/export.json:/wikimap-export.json:ro -e WIKIMAP_EXPORT_PATH=/wikimap-export.json \
     --read-only --cap-drop ALL --security-opt no-new-privileges \
+    --cpus 0.4 --memory 128M \
     docker.io/fphammerle/location-guessing-game-telegram-bot:latest
 ```
 
