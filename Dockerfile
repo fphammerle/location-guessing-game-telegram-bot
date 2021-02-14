@@ -6,7 +6,10 @@ ARG SOURCE_DIR_PATH=/location-guessing-game-telegram-bot
 FROM $BASE_IMAGE as build
 
 RUN apt-get update \
-    && apt-get install --no-install-recommends --yes ca-certificates \
+    && apt-get install --no-install-recommends --yes \
+        ca-certificates \
+        git `# setuptools_scm` \
+        jq `# edit Pipfile.lock` \
     && rm -rf /var/lib/apt/lists/* \
     && useradd --create-home build
 
@@ -19,12 +22,18 @@ WORKDIR $SOURCE_DIR_PATH
 ENV PIPENV_CACHE_DIR=/tmp/pipenv-cache \
     PIPENV_VENV_IN_PROJECT=yes-please \
     PATH=/home/build/.local/bin:$PATH
-RUN pipenv install --deploy \
-    && pipenv graph \
-    && pipenv run pip freeze \
+# `sponge` is not pre-installed
+RUN jq 'del(.default."location-guessing-game-telegram-bot")' Pipfile.lock > Pipfile.lock~ \
+    && mv Pipfile.lock~ Pipfile.lock \
+    && pipenv install --deploy \
     && rm -rf $PIPENV_CACHE_DIR
 COPY --chown=build . $SOURCE_DIR_PATH
-RUN chmod -cR a+rX .
+RUN pipenv install --deploy \
+    && pipenv run location-guessing-game-telegram-bot --help \
+    && pipenv graph \
+    && pipenv run pip freeze \
+    && rm -rf .git/ $PIPENV_CACHE_DIR \
+    && chmod -cR a+rX .
 
 # workaround for broken multi-stage copy
 # > failed to copy files: failed to copy directory: Error processing tar file(exit status 1): Container ID ... cannot be mapped to a host ID
@@ -48,4 +57,4 @@ ARG SOURCE_DIR_PATH
 COPY --from=build $SOURCE_DIR_PATH $SOURCE_DIR_PATH
 ENV PATH=$SOURCE_DIR_PATH/.venv/bin:$PATH
 WORKDIR $SOURCE_DIR_PATH
-CMD ["python", "location_guessing_game_telegram_bot.py"]
+CMD ["location-guessing-game-telegram-bot"]

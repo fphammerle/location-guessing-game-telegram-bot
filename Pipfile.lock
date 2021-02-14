@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "c37088f160c98b47950a36733ba55f419830e6ac5e9608b9734fc2572219b6bd"
+            "sha256": "0f2a60732f30fd6ceba7215cb24f8b0f75fe93f9488226203a31ab09b3124052"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -84,6 +84,10 @@
             ],
             "version": "==3.4.5"
         },
+        "location-guessing-game-telegram-bot": {
+            "editable": true,
+            "path": "."
+        },
         "pycparser": {
             "hashes": [
                 "sha256:2d475327684562c3a96cc71adf7dc8c4f0565175cf86b6d7a404ff4c771f15f0",
@@ -96,7 +100,6 @@
                 "sha256:12adf52b59d7b23ba26b1f3e25ca95a4f850985ebf08a019bb7fd835c432929b",
                 "sha256:b87cdb2fca2983d4d49287c76ea64f13c5b786260bb742fe9a28334f20e6b2d3"
             ],
-            "index": "pypi",
             "version": "==13.2"
         },
         "pytz": {

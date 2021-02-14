@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import argparse
 import json
 import logging
@@ -171,7 +169,3 @@ def _main():
     )
     updater.dispatcher.add_handler(telegram.ext.CommandHandler("photo", _photo_command))
     updater.start_polling()
-
-
-if __name__ == "__main__":
-    _main()

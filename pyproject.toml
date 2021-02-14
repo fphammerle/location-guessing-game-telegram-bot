@@ -1,0 +1,4 @@
+[build-system]
+# https://github.com/pypa/setuptools_scm/tree/v5.0.1#pyprojecttoml-usage
+requires = ["setuptools>=42", "wheel", "setuptools_scm[toml]>=3.4"]
+build-backend = "setuptools.build_meta"
