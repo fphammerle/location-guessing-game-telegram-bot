@@ -147,6 +147,20 @@ class _EnvDefaultArgparser(argparse.ArgumentParser):
         super().add_argument(*args, **kwargs)
 
 
+def _run(telegram_token_path: pathlib.Path, wikimap_export_path: pathlib.Path) -> None:
+    photos = [
+        _Photo.from_wikimap_export(attrs)
+        for attrs in json.loads(wikimap_export_path.read_text())
+    ]
+    updater = telegram.ext.Updater(
+        token=telegram_token_path.read_text().rstrip(),
+        use_context=True,
+        persistence=_Persistence(photos=photos),
+    )
+    updater.dispatcher.add_handler(telegram.ext.CommandHandler("photo", _photo_command))
+    updater.start_polling()
+
+
 def _main():
     argparser = _EnvDefaultArgparser()
     argparser.add_argument(
@@ -175,14 +189,7 @@ def _main():
         datefmt="%Y-%m-%dT%H:%M:%S%z",
     )
     _LOGGER.debug("args=%r", args)
-    photos = [
-        _Photo.from_wikimap_export(attrs)
-        for attrs in json.loads(args.wikimap_export_path.read_text())
-    ]
-    updater = telegram.ext.Updater(
-        token=args.telegram_token_path.read_text().rstrip(),
-        use_context=True,
-        persistence=_Persistence(photos=photos),
+    _run(
+        telegram_token_path=args.telegram_token_path,
+        wikimap_export_path=args.wikimap_export_path,
     )
-    updater.dispatcher.add_handler(telegram.ext.CommandHandler("photo", _photo_command))
-    updater.start_polling()
