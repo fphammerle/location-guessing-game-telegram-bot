@@ -38,7 +38,12 @@ def wikimap_export_path() -> pathlib.Path:
 
 @pytest.fixture(scope="session")
 def wikimap_export(wikimap_export_path) -> pathlib.Path:
-    return json.loads(wikimap_export_path.read_text())
+    try:
+        return json.loads(wikimap_export_path.read_text())
+    except json.decoder.JSONDecodeError as exc:
+        if "git-lfs.github.com" in wikimap_export_path.read_text():
+            raise ValueError("git-lfs pointers unresolved") from exc
+        raise
 
 
 @pytest.fixture(scope="session")
