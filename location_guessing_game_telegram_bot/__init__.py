@@ -109,30 +109,30 @@ class _Persistence(telegram.ext.BasePersistence):
         )
 
     def get_user_data(self) -> dict:
-        return {}
+        return {}  # pragma: no cover
 
     def get_chat_data(self) -> dict:
-        return {}
+        return {}  # pragma: no cover
 
     def get_bot_data(self) -> dict:
         return self._bot_data
 
     def get_conversations(self, name: str) -> dict:
-        return {}
+        return {}  # pragma: no cover
 
     def update_user_data(self, user_id: int, data: dict) -> None:
-        pass
+        pass  # pragma: no cover
 
     def update_chat_data(self, chat_id: int, data: dict) -> None:
-        pass
+        pass  # pragma: no cover
 
     def update_bot_data(self, data: dict) -> None:
-        pass
+        pass  # pragma: no cover
 
     def update_conversation(
         self, name: str, key: tuple, new_state: typing.Optional[object]
     ) -> None:
-        pass
+        pass  # pragma: no cover
 
 
 # https://git.hammerle.me/fphammerle/pyftpd-sink/src/5daf383bc238425cd37d011959a8eeffab0112c3/pyftpd-sink#L48
