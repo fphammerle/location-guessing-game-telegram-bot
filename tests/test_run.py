@@ -29,16 +29,18 @@ def test__run(tmp_path, wikimap_export_path):
             wikimap_export_path=wikimap_export_path,
         )
     assert updater_mock.call_count == 1
-    assert not updater_mock.call_args.args
-    assert set(updater_mock.call_args.kwargs.keys()) == {
+    # > Changed in version 3.8: Added args and kwargs properties.
+    # https://docs.python.org/3/library/unittest.mock.html#unittest.mock.Mock.call_args_list
+    init_args, init_kwargs = updater_mock.call_args
+    assert not init_args
+    assert set(init_kwargs.keys()) == {
         "persistence",
         "token",
         "use_context",
     }
-    assert updater_mock.call_args.kwargs["token"] == "secret"
-    assert updater_mock.call_args.kwargs["use_context"] is True
-    persistence = updater_mock.call_args.kwargs["persistence"]
-    photos = persistence.get_bot_data()["photos"]
+    assert init_kwargs["token"] == "secret"
+    assert init_kwargs["use_context"] is True
+    photos = init_kwargs["persistence"].get_bot_data()["photos"]
     assert len(photos) == 25
     assert (
         photos[1].photo_url

@@ -52,8 +52,8 @@ setuptools.setup(
         # "Programming Language :: Python :: 3.5",
         # "Programming Language :: Python :: 3.6",
         # "Programming Language :: Python :: 3.7",
-        # "Programming Language :: Python :: 3.8",
-        # "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
     ],
     entry_points={
         "console_scripts": [
@@ -66,5 +66,5 @@ setuptools.setup(
         "python-telegram-bot >= 13.0"
     ],
     setup_requires=["setuptools_scm"],
-    # tests_require=["pytest"], TODO
+    tests_require=["pytest"],
 )
