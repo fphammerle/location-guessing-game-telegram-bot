@@ -4,7 +4,9 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-python-telegram-bot = "*"
+# >=13.0 telegram.chat.Chat.send_location shortcut
+# https://github.com/python-telegram-bot/python-telegram-bot/commit/fc5844c13da3b3fb20bb2d0bfcdf1efb1a826ba6#diff-2590f2bde47ea3730442f14a3a029ef77d8f2c8f3186cf5edd7e18bcc7243c39R381
+python-telegram-bot = ">=13.0"
 
 [dev-packages]
 # black requires python>=3.6

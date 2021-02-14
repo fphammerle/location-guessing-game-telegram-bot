@@ -53,8 +53,7 @@ def _photo_command(
             reply_to_message_id=context.chat_data["last_photo_message_id"],
         )
         # https://github.com/python-telegram-bot/python-telegram-bot/pull/2043
-        context.bot.send_location(
-            chat_id=update.effective_chat.id,
+        update.effective_chat.send_location(
             latitude=context.chat_data["last_photo"].latitude,
             longitude=context.chat_data["last_photo"].longitude,
             disable_notification=True,
