@@ -62,6 +62,7 @@ def test_send_solution_and_next_photo(caplog, wikimap_photos):
     update_mock.effective_chat.send_photo.return_value.message_id = (
         "second photo message id"
     )
+    update_mock.effective_chat.id = "chat id for send_location"
     context_mock = unittest.mock.MagicMock()
     context_mock.bot_data = {"photos": wikimap_photos[1:2]}
     context_mock.chat_data = {
@@ -82,8 +83,10 @@ def test_send_solution_and_next_photo(caplog, wikimap_photos):
         disable_web_page_preview=True,
         reply_to_message_id="first photo message id",
     )
-    update_mock.effective_chat.send_location.assert_called_once_with(
-        # float comparison? :O
+    # update_mock.effective_chat.send_location.assert_called_once_with(
+    context_mock.bot.send_location.assert_called_once_with(
+        chat_id="chat id for send_location",
+        # float comparison? :o
         latitude=47.288805,
         longitude=12.144116,
         disable_notification=True,

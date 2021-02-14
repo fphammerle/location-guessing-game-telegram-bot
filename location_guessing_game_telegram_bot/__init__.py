@@ -61,14 +61,18 @@ def _photo_command(
     update: telegram.update.Update,
     context: telegram.ext.callbackcontext.CallbackContext,
 ):
+    assert isinstance(context.chat_data, dict)  # mypy
+    assert update.effective_chat is not None  # mypy
     if "last_photo_message_id" in context.chat_data:
         update.effective_chat.send_message(
             text="Lösung: {}".format(context.chat_data["last_photo"].description_url),
             disable_web_page_preview=True,
             reply_to_message_id=context.chat_data["last_photo_message_id"],
         )
-        # https://github.com/python-telegram-bot/python-telegram-bot/pull/2043
-        update.effective_chat.send_location(
+        # telegram.chat.Chat.send_location shortcut added in v13.0
+        # https://github.com/python-telegram-bot/python-telegram-bot/commit/fc5844c13da3b3fb20bb2d0bfcdf1efb1a826ba6#diff-2590f2bde47ea3730442f14a3a029ef77d8f2c8f3186cf5edd7e18bcc7243c39R381
+        context.bot.send_location(
+            chat_id=update.effective_chat.id,
             latitude=context.chat_data["last_photo"].latitude,
             longitude=context.chat_data["last_photo"].longitude,
             disable_notification=True,
@@ -83,7 +87,8 @@ def _photo_command(
         try:
             with urllib.request.urlopen(photo.photo_url) as photo_response:
                 photo_message = update.effective_chat.send_photo(
-                    photo=photo_response, caption="Wo wurde dieses Photo aufgenommen?",
+                    photo=photo_response,
+                    caption="Wo wurde dieses Photo aufgenommen?",
                 )
         except telegram.error.BadRequest:
             _LOGGER.warning("file size limit exceeded?", exc_info=True)
@@ -108,11 +113,11 @@ class _Persistence(telegram.ext.BasePersistence):
             store_bot_data=True, store_chat_data=False, store_user_data=False
         )
 
-    def get_user_data(self) -> dict:
-        return {}  # pragma: no cover
+    def get_user_data(self) -> typing.DefaultDict[int, dict]:
+        raise NotImplementedError()  # pragma: no cover
 
-    def get_chat_data(self) -> dict:
-        return {}  # pragma: no cover
+    def get_chat_data(self) -> typing.DefaultDict[int, dict]:
+        raise NotImplementedError()  # pragma: no cover
 
     def get_bot_data(self) -> dict:
         return self._bot_data

@@ -33,7 +33,14 @@ setuptools.setup(
     url=_REPO_URL,
     project_urls={"Changelog": _REPO_URL + "/blob/master/CHANGELOG.md"},
     license="GPLv3+",
-    keywords=["bot", "game", "guessing", "location", "photos", "telegram",],
+    keywords=[
+        "bot",
+        "game",
+        "guessing",
+        "location",
+        "photos",
+        "telegram",
+    ],
     classifiers=[
         # https://pypi.org/classifiers/
         "Development Status :: 3 - Alpha",
@@ -41,12 +48,12 @@ setuptools.setup(
         "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
         "Operating System :: OS Independent",
         "Topic :: Games/Entertainment",
-        # .github/workflows/python.yml TODO
-        # "Programming Language :: Python :: 3.5",
-        # "Programming Language :: Python :: 3.6",
-        # "Programming Language :: Python :: 3.7",
-        # "Programming Language :: Python :: 3.8",
-        # "Programming Language :: Python :: 3.9",
+        # .github/workflows/python.yml
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
     ],
     entry_points={
         "console_scripts": [
@@ -54,10 +61,12 @@ setuptools.setup(
         ]
     },
     install_requires=[
-        # >=13.0 telegram.chat.Chat.send_location shortcut
+        # >=13.0 provides telegram.chat.Chat.send_location shortcut
         # https://github.com/python-telegram-bot/python-telegram-bot/commit/fc5844c13da3b3fb20bb2d0bfcdf1efb1a826ba6#diff-2590f2bde47ea3730442f14a3a029ef77d8f2c8f3186cf5edd7e18bcc7243c39R381
-        "python-telegram-bot >= 13.0"
+        # however, >=13.0 requires python>=3.6
+        # https://github.com/python-telegram-bot/python-telegram-bot/commit/19a4f9e53a1798b886fd4ce3e5a9a48db9ae5152#diff-60f61ab7a8d1910d86d9fda2261620314edcae5894d5aaa236b821c7256badd7L64
+        "python-telegram-bot"
     ],
     setup_requires=["setuptools_scm"],
-    # tests_require=["pytest"], TODO
+    tests_require=["pytest"],
 )
