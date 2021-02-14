@@ -25,7 +25,7 @@ class _Photo:
         self.longitude = longitude
 
     def __str__(self) -> str:
-        return "Photo({})".format(self.description_url)
+        return "photo " + self.description_url
 
     @classmethod
     def from_wikimap_export(cls, data: dict) -> "_Photo":
@@ -133,11 +133,6 @@ class _EnvDefaultArgparser(argparse.ArgumentParser):
 
 
 def _main():
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format="%(asctime)s:%(levelname)s:%(name)s:%(funcName)s:%(message)s",
-        datefmt="%Y-%m-%dT%H:%M:%S%z",
-    )
     argparser = _EnvDefaultArgparser()
     argparser.add_argument(
         "--telegram-token-path",
@@ -154,7 +149,16 @@ def _main():
         help="https://wikimap.toolforge.org/api.php?[...] json, "
         "default: env var WIKIMAP_EXPORT_PATH",
     )
+    argparser.add_argument("--debug", action="store_true")
     args = argparser.parse_args()
+    # https://github.com/fphammerle/python-cc1101/blob/26d8122661fc4587ecc7c73df55b92d05cf98fe8/cc1101/_cli.py#L51
+    logging.basicConfig(
+        level=logging.DEBUG if args.debug else logging.INFO,
+        format="%(asctime)s:%(levelname)s:%(name)s:%(funcName)s:%(message)s"
+        if args.debug
+        else "%(message)s",
+        datefmt="%Y-%m-%dT%H:%M:%S%z",
+    )
     _LOGGER.debug("args=%r", args)
     photos = [
         _Photo.from_wikimap_export(attrs)
