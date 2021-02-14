@@ -23,7 +23,11 @@ _REPO_URL = "https://github.com/fphammerle/location-guessing-game-telegram-bot"
 
 setuptools.setup(
     name="location-guessing-game-telegram-bot",
-    use_scm_version=True,
+    use_scm_version={
+        # > AssertionError: cant parse version docker/0.1.0-amd64
+        # https://github.com/pypa/setuptools_scm/blob/master/src/setuptools_scm/git.py#L15
+        "git_describe_command": "git describe --dirty --tags --long --match v*",
+    },
     packages=setuptools.find_packages(),
     description="Basic Telegram Bot Sending Random Wikimedia Commons Photos",
     long_description=pathlib.Path(__file__).parent.joinpath("README.md").read_text(),
