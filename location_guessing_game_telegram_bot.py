@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
-import io
 import json
 import logging
+import os
 import pathlib
 import random
 import typing
@@ -65,6 +65,7 @@ def _photo_command(
     )
     while True:
         photo = random.choice(context.bot_data["photos"])
+        _LOGGER.info("sending %s", photo)
         try:
             with urllib.request.urlopen(photo.photo_url) as photo_response:
                 photo_message = update.effective_chat.send_photo(
@@ -120,19 +121,39 @@ class _Persistence(telegram.ext.BasePersistence):
         pass
 
 
+# https://git.hammerle.me/fphammerle/pyftpd-sink/src/5daf383bc238425cd37d011959a8eeffab0112c3/pyftpd-sink#L48
+class _EnvDefaultArgparser(argparse.ArgumentParser):
+    def add_argument(self, *args, envvar=None, **kwargs):
+        # pylint: disable=arguments-differ; using *args & **kwargs to catch all
+        if envvar:
+            envvar_value = os.environ.get(envvar, None)
+            if envvar_value:
+                kwargs["required"] = False
+                kwargs["default"] = envvar_value
+        super().add_argument(*args, **kwargs)
+
+
 def _main():
     logging.basicConfig(
         level=logging.DEBUG,
         format="%(asctime)s:%(levelname)s:%(name)s:%(funcName)s:%(message)s",
         datefmt="%Y-%m-%dT%H:%M:%S%z",
     )
-    argparser = argparse.ArgumentParser()
-    argparser.add_argument("--token-path", type=pathlib.Path, required=True)
+    argparser = _EnvDefaultArgparser()
+    argparser.add_argument(
+        "--telegram-token-path",
+        type=pathlib.Path,
+        required=True,
+        envvar="TELEGRAM_TOKEN_PATH",
+        help="default: env var TELEGRAM_TOKEN_PATH",
+    )
     argparser.add_argument(
         "--wikimap-export-path",
         type=pathlib.Path,
         required=True,
-        help="https://wikimap.toolforge.org/api.php?[...] json",
+        envvar="WIKIMAP_EXPORT_PATH",
+        help="https://wikimap.toolforge.org/api.php?[...] json, "
+        "default: env var WIKIMAP_EXPORT_PATH",
     )
     args = argparser.parse_args()
     _LOGGER.debug("args=%r", args)
@@ -141,7 +162,7 @@ def _main():
         for attrs in json.loads(args.wikimap_export_path.read_text())
     ]
     updater = telegram.ext.Updater(
-        token=args.token_path.read_text().rstrip(),
+        token=args.telegram_token_path.read_text().rstrip(),
         use_context=True,
         persistence=_Persistence(photos=photos),
     )

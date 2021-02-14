@@ -1,0 +1,4 @@
+*
+!Pipfile
+!Pipfile.lock
+!location_guessing_telegram_bot.py
