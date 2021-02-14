@@ -37,6 +37,9 @@ Optionally, replace `sudo docker` with `podman`.
 
 Annotation of signed git tags `docker/*` contains docker image digests: https://github.com/fphammerle/location-guessing-game-telegram-bot/tags
 
+Detached signatures of images are available at https://github.com/fphammerle/container-image-sigstore
+(exluding automatically built `latest` tag).
+
 ### Docker Compose 🐙
 
 1. Clone this repository.
