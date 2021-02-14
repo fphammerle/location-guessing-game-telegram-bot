@@ -1,0 +1,26 @@
+version: '2.2'
+
+networks:
+  default:
+    driver_opts:
+      com.docker.network.bridge.name: loc-guess-tlgrm
+
+services:
+  bot:
+    build: .
+    image: docker.io/fphammerle/location-guessing-game-telegram-bot
+    container_name: location_guessing_game_telegram_bot
+    environment:
+      TELEGRAM_TOKEN_PATH: /telegram-token
+      WIKIMAP_EXPORT_PATH: /wikimap-export.json
+    read_only: true
+    volumes:
+    - /file/containing/api-token:/telegram-token:ro
+    - /wikimap/export.json:/wikimap-export.json:ro
+    cap_drop: [all]
+    security_opt: [no-new-privileges]
+    # docker-compose >=2.2,<3
+    cpus: 0.4
+    mem_limit: 128M
+
+# https://docs.docker.com/compose/compose-file/compose-file-v2/

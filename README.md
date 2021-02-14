@@ -36,6 +36,12 @@ Optionally, replace `sudo docker` with `podman`.
 
 Annotation of signed tags `docker/*` contains docker image digests: https://github.com/fphammerle/location-guessing-game-telegram-bot/tags
 
+### Docker Compose 🐙
+
+1. Clone this repository.
+2. Edit paths in `docker-compose.yml`.
+3. `sudo docker-compose up --build`
+
 ## Trivia
 
 Why create a Telegram bot instead of web app?
