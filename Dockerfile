@@ -24,7 +24,7 @@ ENV PIPENV_CACHE_DIR=/tmp/pipenv-cache \
     PIPENV_VENV_IN_PROJECT=yes-please \
     PATH=/home/build/.local/bin:$PATH
 # `sponge` is not pre-installed
-RUN jq 'del(.default."location-guessing-game-telegram-bot")' Pipfile.lock > Pipfile.lock~ \
+RUN jq 'del(.default."location-guessing-game-telegram-bot", .default."sanitized-package")' Pipfile.lock > Pipfile.lock~ \
     && mv Pipfile.lock~ Pipfile.lock \
     && pipenv install --deploy \
     && rm -rf $PIPENV_CACHE_DIR
