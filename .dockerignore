@@ -6,4 +6,5 @@
 !Pipfile.lock
 !README.md
 !location_guessing_game_telegram_bot/
+!pyproject.toml
 !setup.py

@@ -1,0 +1,30 @@
+# sync with https://github.com/fphammerle/docker-onion-service/blob/master/.github/workflows/container-image.yml
+
+name: container image
+
+on:
+  push:
+  pull_request:
+  schedule:
+  - cron: '0 20 * * 5'
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: docker/setup-qemu-action@v1.2.0
+    - uses: docker/setup-buildx-action@v1.3.0
+    # > By default, this action uses the Git context so you don't need to use
+    # > the actions/checkout action to checkout the repository because this
+    # > will be done directly by buildkit. [...]
+    # > any file mutation in the steps that precede [...] will be ignored
+    # https://github.com/marketplace/actions/build-and-push-docker-images
+    # > The commit history is not preserved.
+    # https://docs.docker.com/engine/reference/commandline/build/#git-repositories
+    - uses: docker/build-push-action@v2.5.0
+      with:
+        build-args: |
+          SETUPTOOLS_SCM_PRETEND_VERSION=0 # git history unavailable (see above)
+        platforms: |
+          linux/amd64
+        # missing cffi wheel for linux/arm/v7
