@@ -29,6 +29,8 @@ RUN jq 'del(.default."location-guessing-game-telegram-bot", .default."sanitized-
     && pipenv install --deploy \
     && rm -rf $PIPENV_CACHE_DIR
 COPY --chown=build . $SOURCE_DIR_PATH
+# allow manual specification to support build without git history
+ARG SETUPTOOLS_SCM_PRETEND_VERSION=
 RUN pipenv install --deploy \
     && pipenv run location-guessing-game-telegram-bot --help \
     && pipenv graph \
