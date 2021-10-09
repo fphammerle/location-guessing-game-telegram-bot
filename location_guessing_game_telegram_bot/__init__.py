@@ -32,7 +32,7 @@ _LOGGER = logging.getLogger(__name__)
 
 class _Photo:
     def __init__(
-        self, photo_url: str, description_url: str, latitude: float, longitude: float
+        self, *, photo_url: str, description_url: str, latitude: float, longitude: float
     ) -> None:
         self.photo_url = photo_url
         self.description_url = description_url
@@ -65,7 +65,7 @@ def _photo_command(
     assert update.effective_chat is not None  # mypy
     if "last_photo_message_id" in context.chat_data:
         update.effective_chat.send_message(
-            text="Lösung: {}".format(context.chat_data["last_photo"].description_url),
+            text=f"Lösung: {context.chat_data['last_photo'].description_url}",
             disable_web_page_preview=True,
             reply_to_message_id=context.chat_data["last_photo_message_id"],
         )
@@ -152,7 +152,9 @@ class _EnvDefaultArgparser(argparse.ArgumentParser):
         super().add_argument(*args, **kwargs)
 
 
-def _run(telegram_token_path: pathlib.Path, wikimap_export_path: pathlib.Path) -> None:
+def _run(
+    *, telegram_token_path: pathlib.Path, wikimap_export_path: pathlib.Path
+) -> None:
     photos = [
         _Photo.from_wikimap_export(attrs)
         for attrs in json.loads(wikimap_export_path.read_text())

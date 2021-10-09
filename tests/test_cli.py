@@ -94,6 +94,6 @@ def test_logging_config(args, root_log_level, log_format):
     run_mock.assert_called_once_with(
         telegram_token_path=pathlib.Path("/t"), wikimap_export_path=pathlib.Path("/w")
     )
-    assert logging_basic_config_mock.call_count == 1
+    logging_basic_config_mock.assert_called_once()
     assert logging_basic_config_mock.call_args[1]["level"] == root_log_level
     assert logging_basic_config_mock.call_args[1]["format"] == log_format

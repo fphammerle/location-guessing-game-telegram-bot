@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `dockerfile`: support build without git history
   (by manually setting build argument `SETUPTOOLS_SCM_PRETEND_VERSION`)
 
+### Removed
+- compatibility with `python3.5`
+
 ## [0.1.1] - 2021-02-14
 ### Fixed
 - loosen version constraint for `python-telegram-bot` to restore compatibility with python3.5

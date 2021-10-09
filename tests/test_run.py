@@ -28,7 +28,7 @@ def test__run(tmp_path, wikimap_export_path):
             telegram_token_path=telegram_token_path,
             wikimap_export_path=wikimap_export_path,
         )
-    assert updater_mock.call_count == 1
+    updater_mock.assert_called_once()
     # > Changed in version 3.8: Added args and kwargs properties.
     # https://docs.python.org/3/library/unittest.mock.html#unittest.mock.Mock.call_args_list
     init_args, init_kwargs = updater_mock.call_args
