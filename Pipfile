@@ -20,6 +20,19 @@ pytest-cov = "*"
 # > ModuleNotFoundError: No module named 'typing_extensions'
 typing_extensions = {version = "*", markers = ""}
 
+# python<=3.8 compatibility
+# > [...]/python3.8/site-packages/telegram/ext/jobqueue.py:27: in <module>
+# >     from apscheduler.schedulers.background import BackgroundScheduler
+# > [...]
+# > [...]/python3.8/site-packages/tzlocal/unix.py:6: in <module>
+# >     import pytz_deprecation_shim as pds
+# > [...]
+# > [...]/python3.8/site-packages/pytz_deprecation_shim/_compat_py3.py:7: in <module>
+# >     from backports import zoneinfo
+# > E   ModuleNotFoundError: No module named 'backports'
+# > Error: Process completed with exit code 4.
+"backports.zoneinfo" = {version = "*", markers = "python_version <= '3.8'"}
+
 [requires]
 python_version = "3"
 
