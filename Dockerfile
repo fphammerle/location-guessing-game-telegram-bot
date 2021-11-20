@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=docker.io/python:3.8.7-slim-buster
+ARG BASE_IMAGE=docker.io/python:3.10.0-slim-bullseye
 ARG SOURCE_DIR_PATH=/location-guessing-game-telegram-bot
 
 
