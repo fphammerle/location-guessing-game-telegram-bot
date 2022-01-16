@@ -15,7 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from __future__ import annotations
+
 import argparse
+import dataclasses
 import json
 import logging
 import os
@@ -30,20 +33,19 @@ import telegram.update
 _LOGGER = logging.getLogger(__name__)
 
 
+@dataclasses.dataclass
 class _Photo:
-    def __init__(
-        self, *, photo_url: str, description_url: str, latitude: float, longitude: float
-    ) -> None:
-        self.photo_url = photo_url
-        self.description_url = description_url
-        self.latitude = latitude
-        self.longitude = longitude
+
+    photo_url: str
+    description_url: str
+    latitude: float
+    longitude: float
 
     def __str__(self) -> str:
         return "photo " + self.description_url
 
     @classmethod
-    def from_wikimap_export(cls, data: dict) -> "_Photo":
+    def from_wikimap_export(cls, data: dict) -> _Photo:
         if isinstance(data["coordinates"], list):
             coords = data["coordinates"][0]
         else:
@@ -168,7 +170,7 @@ def _run(
     updater.start_polling()
 
 
-def _main():
+def _main() -> None:
     argparser = _EnvDefaultArgparser()
     argparser.add_argument(
         "--telegram-token-path",

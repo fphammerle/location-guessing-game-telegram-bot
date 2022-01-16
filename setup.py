@@ -47,13 +47,12 @@ setuptools.setup(
     ],
     classifiers=[
         # https://pypi.org/classifiers/
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: End Users/Desktop",
         "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
         "Operating System :: OS Independent",
         "Topic :: Games/Entertainment",
         # .github/workflows/python.yml
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
@@ -64,8 +63,9 @@ setuptools.setup(
             "location-guessing-game-telegram-bot = location_guessing_game_telegram_bot:_main",
         ]
     },
-    # f-strings & force kwargs with *
-    python_requires=">=3.6",
+    # >=3.6 f-strings & force kwargs with *
+    # >=3.7 postponed evaluation of type annotations (PEP563) & dataclass
+    python_requires=">=3.7",
     install_requires=[
         # >=13.0 provides telegram.chat.Chat.send_location shortcut
         # https://github.com/python-telegram-bot/python-telegram-bot/commit/fc5844c13da3b3fb20bb2d0bfcdf1efb1a826ba6#diff-2590f2bde47ea3730442f14a3a029ef77d8f2c8f3186cf5edd7e18bcc7243c39R381
