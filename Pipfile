@@ -19,7 +19,8 @@ pytest-cov = "*"
 # >     from typing_extensions import Final, NoReturn
 # > ModuleNotFoundError: No module named 'typing_extensions'
 typing_extensions = {version = "*", markers = ""}
-
+# mypy on python<3.8
+typed-ast = {markers = "python_version < '3.8'"}
 # python<=3.8 compatibility
 # > [...]/python3.8/site-packages/telegram/ext/jobqueue.py:27: in <module>
 # >     from apscheduler.schedulers.background import BackgroundScheduler
