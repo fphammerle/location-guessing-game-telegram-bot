@@ -46,6 +46,7 @@ class _Photo:
 
     @classmethod
     def from_wikimap_export(cls, data: dict) -> _Photo:
+        # pylint: disable=consider-ternary-expression; easier to read
         if isinstance(data["coordinates"], list):
             coords = data["coordinates"][0]
         else:

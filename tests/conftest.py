@@ -21,6 +21,7 @@ import typing
 
 import pytest
 
+# pylint: disable=import-private-name; tests
 from location_guessing_game_telegram_bot import _Photo
 
 
