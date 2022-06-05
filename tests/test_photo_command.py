@@ -48,7 +48,7 @@ def test_send_photo(caplog, wikimap_photos):
         "/H%C3%BCtteltalkopf_%28Venedigergruppe%29_from_Tristkopf.jpg"
     )
     update_mock.effective_chat.send_photo.assert_called_once_with(
-        photo=http_response_mock.__enter__(),
+        photo=http_response_mock.__enter__(),  # pylint: disable=unnecessary-dunder-call
         caption="Wo wurde dieses Photo aufgenommen?",
     )
     assert context_mock.chat_data == {
@@ -96,7 +96,7 @@ def test_send_solution_and_next_photo(caplog, wikimap_photos):
         "https://upload.wikimedia.org/wikipedia/commons/6/65/Gro%C3%9Fvenediger3.JPG"
     )
     update_mock.effective_chat.send_photo.assert_called_once_with(
-        photo=http_response_mock.__enter__(),
+        photo=http_response_mock.__enter__(),  # pylint: disable=unnecessary-dunder-call
         caption="Wo wurde dieses Photo aufgenommen?",
     )
     assert context_mock.chat_data == {
