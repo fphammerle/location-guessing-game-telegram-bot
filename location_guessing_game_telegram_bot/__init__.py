@@ -167,7 +167,10 @@ def _run(
         use_context=True,
         persistence=_Persistence(photos=photos),
     )
-    updater.dispatcher.add_handler(telegram.ext.CommandHandler("photo", _photo_command))
+    # workaround for mypy reporting
+    # > error: Cannot determine type of "dispatcher"  [has-type]
+    dispatcher: telegram.ext.dispatcher.Dispatcher = updater.dispatcher  # type: ignore
+    dispatcher.add_handler(telegram.ext.CommandHandler("photo", _photo_command))
     updater.start_polling()
 
 
