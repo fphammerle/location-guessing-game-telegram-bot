@@ -69,9 +69,12 @@ setuptools.setup(
     install_requires=[
         # >=13.0 provides telegram.chat.Chat.send_location shortcut
         # https://github.com/python-telegram-bot/python-telegram-bot/commit/fc5844c13da3b3fb20bb2d0bfcdf1efb1a826ba6#diff-2590f2bde47ea3730442f14a3a029ef77d8f2c8f3186cf5edd7e18bcc7243c39R381
-        # however, >=13.0 requires python>=3.6
+        # >=13.0 requires python>=3.6
         # https://github.com/python-telegram-bot/python-telegram-bot/commit/19a4f9e53a1798b886fd4ce3e5a9a48db9ae5152#diff-60f61ab7a8d1910d86d9fda2261620314edcae5894d5aaa236b821c7256badd7L64
-        "python-telegram-bot"
+        # v20.0 made module `telegram.update` private
+        # https://github.com/python-telegram-bot/python-telegram-bot/commit/5275c451994438b1184dd395b36fc8ae61369037#diff-361ea8462f85b6a84d97ac5b72c7d0c906c1970347033343cf0efc0bf2d13ec4
+        # https://github.com/python-telegram-bot/python-telegram-bot/pull/2687
+        "python-telegram-bot>=13.0,<20.0"
     ],
     setup_requires=["setuptools_scm"],
     tests_require=["pytest"],
