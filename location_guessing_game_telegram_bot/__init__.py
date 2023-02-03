@@ -35,7 +35,6 @@ _LOGGER = logging.getLogger(__name__)
 
 @dataclasses.dataclass
 class _Photo:
-
     photo_url: str
     description_url: str
     latitude: float
