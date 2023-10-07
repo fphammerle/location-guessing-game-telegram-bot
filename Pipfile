@@ -10,7 +10,6 @@ location-guessing-game-telegram-bot = {path = ".", editable = true}
 black = "*"
 mypy = "*"
 pylint = "*"
-pylint-import-requirements = "*"
 pytest = "*"
 pytest-cov = "*"
 
