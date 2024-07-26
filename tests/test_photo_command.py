@@ -15,8 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import collections
 import logging
 import unittest.mock
+
+import telegram.error
 
 # pylint: disable=import-private-name; tests
 from location_guessing_game_telegram_bot import _photo_command
@@ -103,4 +106,45 @@ def test_send_solution_and_next_photo(caplog, wikimap_photos):
     assert context_mock.chat_data == {
         "last_photo": wikimap_photos[1],
         "last_photo_message_id": "second photo message id",
+    }
+
+
+def test__photo_command_file_size_exceeded(caplog, wikimap_photos):
+    update_mock = unittest.mock.MagicMock()
+    update_mock.effective_chat.send_photo.side_effect = [
+        telegram.error.BadRequest(
+            'File "/var/lib/engine/tmpfs_numa0/image.jpeg" of size 42 bytes is too big for a photo'
+        )
+    ] * 4 + [
+        collections.namedtuple("Photo", ["message_id"])(message_id="photo message id"),
+    ]
+    context_mock = unittest.mock.MagicMock()
+    context_mock.bot_data = {"photos": wikimap_photos[:1]}
+    context_mock.chat_data = {}
+    http_response_mock = unittest.mock.MagicMock()
+    with unittest.mock.patch(
+        "urllib.request.urlopen", return_value=http_response_mock
+    ) as urlopen_mock, caplog.at_level(logging.INFO):
+        _photo_command(update=update_mock, context=context_mock)
+    assert urlopen_mock.call_count == 4 + 1
+    assert update_mock.effective_chat.send_photo.call_count == 4 + 1
+    assert len(caplog.records) == 4 * 2 + 1
+    assert caplog.record_tuples[0::2] == [
+        (
+            "location_guessing_game_telegram_bot",
+            logging.INFO,
+            "sending photo https://commons.wikimedia.org/wiki"
+            "/File:H%C3%BCtteltalkopf_(Venedigergruppe)_from_Tristkopf.jpg",
+        )
+    ] * (4 + 1)
+    assert caplog.record_tuples[1::2] == [
+        (
+            "location_guessing_game_telegram_bot",
+            logging.WARNING,
+            "file size limit exceeded?",
+        )
+    ] * (4)
+    assert context_mock.chat_data == {
+        "last_photo": wikimap_photos[0],
+        "last_photo_message_id": "photo message id",
     }
