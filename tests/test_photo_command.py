@@ -148,3 +148,36 @@ def test__photo_command_file_size_exceeded(caplog, wikimap_photos):
         "last_photo": wikimap_photos[0],
         "last_photo_message_id": "photo message id",
     }
+
+
+def test__photo_command_timeout(caplog, wikimap_photos):
+    update_mock = unittest.mock.MagicMock()
+    update_mock.effective_chat.send_photo.side_effect = [
+        telegram.error.TimedOut
+    ] * 3 + [
+        collections.namedtuple("Photo", ["message_id"])(
+            message_id="photo message id after timeout"
+        ),
+    ]
+    context_mock = unittest.mock.MagicMock()
+    context_mock.bot_data = {"photos": wikimap_photos[:1]}
+    context_mock.chat_data = {}
+    http_response_mock = unittest.mock.MagicMock()
+    with unittest.mock.patch(
+        "urllib.request.urlopen", return_value=http_response_mock
+    ) as urlopen_mock, caplog.at_level(logging.INFO):
+        _photo_command(update=update_mock, context=context_mock)
+    assert urlopen_mock.call_count == 3 + 1
+    assert update_mock.effective_chat.send_photo.call_count == 3 + 1
+    assert len(caplog.records) == 3 * 2 + 1
+    assert caplog.record_tuples[1::2] == [
+        (
+            "location_guessing_game_telegram_bot",
+            logging.WARNING,
+            "timeout",
+        )
+    ] * (3)
+    assert context_mock.chat_data == {
+        "last_photo": wikimap_photos[0],
+        "last_photo_message_id": "photo message id after timeout",
+    }
