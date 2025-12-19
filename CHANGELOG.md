@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (by manually setting build argument `SETUPTOOLS_SCM_PRETEND_VERSION`)
 
 ### Removed
-- compatibility with `python3.5`, `python3.6`, `python3.7` & `python3.8`
+- compatibility with `python3.5`, `python3.6`, `python3.7`, `python3.8`
+  & `python3.9`
 
 ## [0.1.1] - 2021-02-14
 ### Fixed

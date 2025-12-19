@@ -18,13 +18,13 @@
 from __future__ import annotations
 
 import argparse
+import collections
 import dataclasses
 import json
 import logging
 import os
 import pathlib
 import random
-import typing
 import urllib.request
 
 import telegram.ext
@@ -109,16 +109,16 @@ class _Persistence(telegram.ext.BasePersistence):
     https://python-telegram-bot.readthedocs.io/en/latest/telegram.ext.basepersistence.html
     """
 
-    def __init__(self, photos: typing.List[_Photo]) -> None:
+    def __init__(self, photos: list[_Photo]) -> None:
         self._bot_data = {"photos": photos}
         super().__init__(
             store_bot_data=True, store_chat_data=False, store_user_data=False
         )
 
-    def get_user_data(self) -> typing.DefaultDict[int, dict]:
+    def get_user_data(self) -> collections.defaultdict[int, dict]:
         raise NotImplementedError()  # pragma: no cover
 
-    def get_chat_data(self) -> typing.DefaultDict[int, dict]:
+    def get_chat_data(self) -> collections.defaultdict[int, dict]:
         raise NotImplementedError()  # pragma: no cover
 
     def get_bot_data(self) -> dict:
@@ -137,7 +137,7 @@ class _Persistence(telegram.ext.BasePersistence):
         pass  # pragma: no cover
 
     def update_conversation(
-        self, name: str, key: tuple, new_state: typing.Optional[object]
+        self, name: str, key: tuple, new_state: object | None
     ) -> None:
         pass  # pragma: no cover
 

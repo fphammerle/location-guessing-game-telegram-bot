@@ -17,7 +17,6 @@
 
 import json
 import pathlib
-import typing
 
 import pytest
 
@@ -48,5 +47,5 @@ def wikimap_export(wikimap_export_path) -> pathlib.Path:
 
 
 @pytest.fixture(scope="session")
-def wikimap_photos(wikimap_export) -> typing.List[_Photo]:
+def wikimap_photos(wikimap_export) -> list[_Photo]:
     return [_Photo.from_wikimap_export(attrs) for attrs in wikimap_export]
