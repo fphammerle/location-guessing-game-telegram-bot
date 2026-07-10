@@ -23,6 +23,19 @@ exceptiongroup = {markers = "python_version < '3.11'"}
 # > ModuleNotFoundError: No module named 'tomli'
 tomli = {markers = "python_version < '3.11'"}
 
+# > tests/conftest.py:24: in <module>
+# >     from location_guessing_game_telegram_bot import _Photo
+# > location_guessing_game_telegram_bot/__init__.py:30: in <module>
+# >     import telegram.ext
+# > …/site-packages/telegram/ext/__init__.py:30: in <module>
+# >     from .jobqueue import JobQueue, Job
+# > …/site-packages/telegram/ext/jobqueue.py:26: in <module>
+# >     from apscheduler.events import EVENT_JOB_ERROR, EVENT_JOB_EXECUTED, JobEvent
+# > …/site-packages/apscheduler/__init__.py:1: in <module>
+# >     from pkg_resources import get_distribution, DistributionNotFound
+# > E   ModuleNotFoundError: No module named 'pkg_resources'
+setuptools = "<82"
+
 [requires]
 python_version = "3"
 
