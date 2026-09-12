@@ -54,6 +54,7 @@ setuptools.setup(
         "Topic :: Games/Entertainment",
         # .github/workflows/python.yml
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
     ],
     entry_points={
         "console_scripts": [
