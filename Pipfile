@@ -42,6 +42,9 @@ pytest-cov = "*"
 # urllib3>=2 removed urllib3.contrib.appengine used by python-telegram-bot==13.15
 # > E   ModuleNotFoundError: No module named 'urllib3.contrib.appengine'
 urllib3 = "<2"
+# python-telegram-bot==13.15 uses imghdr in telegram/files/inputfile.py;
+# imghdr was removed from the standard library in python3.13 (PEP 594)
+standard-imghdr = "*"
 
 [requires]
 python_version = "3"
