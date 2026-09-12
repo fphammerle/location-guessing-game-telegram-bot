@@ -15,8 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from __future__ import annotations
-
 import argparse
 import collections
 import dataclasses
@@ -25,6 +23,7 @@ import logging
 import os
 import pathlib
 import random
+import typing
 import urllib.request
 
 import telegram.ext
@@ -44,7 +43,7 @@ class _Photo:
         return "photo " + self.description_url
 
     @classmethod
-    def from_wikimap_export(cls, data: dict) -> _Photo:
+    def from_wikimap_export(cls, data: dict) -> typing.Self:
         # pylint: disable=consider-ternary-expression; easier to read
         if isinstance(data["coordinates"], list):
             coords = data["coordinates"][0]
@@ -115,10 +114,10 @@ class _Persistence(telegram.ext.BasePersistence):
             store_bot_data=True, store_chat_data=False, store_user_data=False
         )
 
-    def get_user_data(self) -> collections.defaultdict[int, dict]:
+    def get_user_data(self) -> typing.Never:
         raise NotImplementedError()  # pragma: no cover
 
-    def get_chat_data(self) -> collections.defaultdict[int, dict]:
+    def get_chat_data(self) -> typing.Never:
         raise NotImplementedError()  # pragma: no cover
 
     def get_bot_data(self) -> dict:
