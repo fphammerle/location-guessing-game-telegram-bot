@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "23494abf2cbaa203ea4e974e66b82a3746689ddc2461e7bd0660ffafefa6bf02"
+            "sha256": "4014f43151ba2d988477455eae82c88587f905046af01fe3f72f1232c795f648"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -760,6 +760,14 @@
             ],
             "markers": "python_version >= '3.8'",
             "version": "==0.4.1"
+        },
+        "standard-imghdr": {
+            "hashes": [
+                "sha256:30a1bff5465605bb496f842a6ac3cc1f2131bf3025b0da28d4877d6d4b7cc8e9",
+                "sha256:8d9c68058d882f6fc3542a8d39ef9ff94d2187dc90bd0c851e0902776b7b7a42"
+            ],
+            "index": "pypi",
+            "version": "==3.13.0"
         },
         "tomlkit": {
             "hashes": [
