@@ -53,7 +53,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
         "Topic :: Games/Entertainment",
         # .github/workflows/python.yml
-        "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
     ],
@@ -63,10 +62,11 @@ setuptools.setup(
         ]
     },
     # >=3.6 f-strings & force kwargs with *
-    # >=3.7 postponed evaluation of type annotations (PEP563) & dataclass
+    # >=3.7 dataclass
     # >=3.9 type hints list[…] & collections.defaultdict[…] (PEP585)
     # >=3.10 union types as X | Y (PEP604)
-    python_requires=">=3.10",
+    # >=3.11 typing.Self & typing.Never
+    python_requires=">=3.11",
     install_requires=[
         # >=13.0 provides telegram.chat.Chat.send_location shortcut
         # https://github.com/python-telegram-bot/python-telegram-bot/commit/fc5844c13da3b3fb20bb2d0bfcdf1efb1a826ba6#diff-2590f2bde47ea3730442f14a3a029ef77d8f2c8f3186cf5edd7e18bcc7243c39R381
