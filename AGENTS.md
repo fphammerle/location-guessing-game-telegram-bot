@@ -24,6 +24,12 @@
 
 - Fix CI failures automatically, iterating until all checks are green — no need to ask first.
 
+## Working tree hygiene
+
+- After running local tools (pytest, mypy, pylint, …), check `git status` for untracked
+  generated artefacts (e.g. `.coverage`).
+- Add them to `.gitignore` — do **not** commit them.
+
 ## Pipfile / dependency management
 
 - Generate `Pipfile.lock` on the **lowest** supported Python version.
