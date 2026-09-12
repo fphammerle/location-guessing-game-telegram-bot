@@ -5,10 +5,22 @@ verify_ssl = true
 
 [packages]
 location-guessing-game-telegram-bot = {path = ".", editable = true}
+# apscheduler==3.6.3 uses pkg_resources from setuptools;
+# setuptools>=82 removed pkg_resources
+# > E   ModuleNotFoundError: No module named 'pkg_resources'
+setuptools = "<82"
 
 [dev-packages]
 black = "*"
+# pylint>=4 requires dill on all python versions (>=0.2 on py<3.11, >=0.3.6 on py>=3.11)
+# but pipenv only resolves the dill requirement matching the lock-generation python version,
+# leaving dill uninstalled on the other versions
+dill = "*"
 mypy = "*"
+# mypy requires typing_extensions on all python versions
+# but pipenv only resolves the requirement matching the lock-generation python version,
+# leaving typing_extensions uninstalled on the other versions
+typing_extensions = "*"
 pylint = "*"
 pytest = "*"
 pytest-cov = "*"
@@ -34,7 +46,12 @@ tomli = {markers = "python_version < '3.11'"}
 # > …/site-packages/apscheduler/__init__.py:1: in <module>
 # >     from pkg_resources import get_distribution, DistributionNotFound
 # > E   ModuleNotFoundError: No module named 'pkg_resources'
-setuptools = "<82"
+# python-telegram-bot==13.15 uses urllib3 in telegram/utils/request.py
+# but does not declare it as a dependency
+# > E   ModuleNotFoundError: No module named 'urllib3'
+# urllib3>=2 removed urllib3.contrib.appengine used by python-telegram-bot==13.15
+# > E   ModuleNotFoundError: No module named 'urllib3.contrib.appengine'
+urllib3 = "<2"
 
 [requires]
 python_version = "3"
