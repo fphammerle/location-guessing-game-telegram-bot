@@ -19,6 +19,10 @@
 - When content is copied or adapted from another repository, reference the sources with full
   permanent URLs (commit hash + path), e.g. `https://github.com/<owner>/<repo>/blob/<sha>/<path>`.
 - Don't hard-wrap long lines in commit message bodies — write each paragraph / list item on a single line; git log viewers wrap them automatically.
+- Never justify a version update with the old pinned version no longer being installable or the
+  build failing because of it (e.g. "so the pinned version can no longer be installed") — pins are
+  intentional and breaking when upstream moves on is their whole point. Keep versions pinned; this
+  applies to PR descriptions as well.
 
 ## CHANGELOG
 
