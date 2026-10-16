@@ -13,6 +13,7 @@
 
 - Attribution line: `Co-Authored-By: Claude <model name> <noreply@anthropic.com>` — always include the model name,
   e.g. `Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>`
+  (see https://web.archive.org/web/20261016172400/https://docs.github.com/en/pull-requests/how-tos/commit-changes/creating-a-commit-with-multiple-authors)
 - Do **not** include a `Claude-Session:` line — the session URL is private.
 - Explain **why**, not what — don't restate in prose what's already obvious from `git diff` of
   the commit (e.g. "add a notice to the README", "update section X").
